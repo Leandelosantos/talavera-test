@@ -2,16 +2,19 @@ let carrito=JSON.parse(localStorage.getItem("carrito")) || [];
 let productosJSON = [];
 let card 
 
-let compra=document.getElementsByClassName("productos");
+console.log(carrito);
+
+
+let compra = document.getElementsByClassName("productos");
 console.log(compra.innerHTML);
 
-let cards=document.getElementById("productos"); 
+let cards = document.getElementById("productos"); 
 
-renderizarProductos()
+renderizarProductos()    //acostumbrate a invocar la funcion desp de crearla
 function renderizarProductos() {
     console.log(listaproductos)
     for (const compra of listaproductos) {
-        let card=document.createElement("div");
+        let card = document.createElement("div");
         card.className="card col-3 text-align-center";
         card.style= "width: 18rem;";
         card.innerHTML+=`
@@ -24,7 +27,7 @@ function renderizarProductos() {
     </div>
 
         `;                                              // Llamo a la funcion y le envio el id del producto por parametro
-cards.append(card);
+    cards.append(card);
 
 }
 }
@@ -67,18 +70,19 @@ function crearCarrito() {
 //Agregar productos al carrito//
 function newAddToCart(selectedId){ //recibo el id
 //metodo find me retorna un objeto que coincida con la condicion
-let selectedProduct = listaproductos.find(element => element.id == selectedId.id);
+let selectedProduct = listaproductos.find(element => element.id = selectedId);
+//let selectedProduct = listaproductos.filter(element => console.log(element.id));
 console.log(selectedProduct); //lo muestro por consola para corroborar
-if(selectedProduct == undefined){
-    let selectedProduct = {
+if(selectedProduct !== undefined){
+    /* let selectedProduct = {
        
         cantidad:1
-    };
+    }; */
     carrito.push(selectedProduct) //lo agrego    
 
-    console.log(selectedProduct); //lo muestro por consola
+    //console.log(selectedProduct); //lo muestro por consola
 
-    localStorage.setItem("carrito",JSON.stringify(carrito));
+    localStorage.setItem("carrito",JSON.stringify(selectedProduct));
 
     Swal.fire({
         title: "¡Producto agregado al carro!",
@@ -109,15 +113,15 @@ if(selectedProduct == undefined){
         }
     });
      
-    return cards; 
+    //return cards; 
 
      //agregamos una fila a la tabla del carro
 
      document.getElementById("items").innerHTML+=(`
      <tr id='fila${selectedProduct.id}'>
-     <td> ${selectedProduct.id} </td>
-     <td> ${selectedProduct.nombre}</td>
-     <td id='${selectedProduct.id}'> ${selectedProduct.cantidad}</td>
+     <td> ${selectedProduct.nombre} </td>
+     <td> ${selectedProduct.cantidad}</td>
+     <td id='${selectedProduct.id}'> ${selectedProduct.precio}</td>
      <td> ${selectedProduct.precio}</td>
      <td> <button class='btn btn-light' onclick='eliminar(${selectedProduct.id})'>🗑️</button>`);
 
